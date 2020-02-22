@@ -9,11 +9,11 @@
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="connection.pool_size">5</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="Employee"/>
-        <mapping class="DepHead"/>
-        <mapping class="HR"/>
-        <mapping class="Course"/>
-        <mapping class="EmployeeCourse"/>
-        <mapping class="Application"/>
+        <mapping class="pkg.staff.Employee"/>
+        <mapping class="pkg.staff.DepHead"/>
+        <mapping class="pkg.staff.HR"/>
+        <mapping class="pkg.course.Course"/>
+        <mapping class="pkg.staff.EmployeeCourse"/>
+        <mapping class="pkg.application.Application"/>
     </session-factory>
 </hibernate-configuration>

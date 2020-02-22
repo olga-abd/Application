@@ -1,8 +1,9 @@
-import java.util.Scanner;
+import pkg.forms.MainForm2;
+import pkg.staff.Employee;
 
 public class Main {
     public static void main (String[] args) {
-//        Employee employee = new Employee();
+//        pkg.staff.Employee employee = new pkg.staff.Employee();
 //        employee.setAge(54);
 //        employee.setFio("работник Иванов");
 //        employee.setGrade(5);
@@ -12,7 +13,7 @@ public class Main {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//        DepHead head = new DepHead();
+//        pkg.staff.DepHead head = new pkg.staff.DepHead();
 //        head.setAge(46);
 //        head.setFio("начальник Петров");
 //        head.setGrade(23);
@@ -24,7 +25,7 @@ public class Main {
 //        }
 //        employee.setHead(head);
 //
-//        HR hr = new HR();
+//        pkg.staff.HR hr = new pkg.staff.HR();
 //        hr.setAge(30);
 //        hr.setFio("сотрудник hr");
 //        hr.setGrade(5);
@@ -35,7 +36,7 @@ public class Main {
 //            e.printStackTrace();
 //        }
 //
-//        StaffDAO staffDAODAO = new StaffDAO();
+//        pkg.staff.StaffDAO staffDAODAO = new pkg.staff.StaffDAO();
 //        staffDAODAO.save(hr);
 //        staffDAODAO.save(employee);
 
@@ -44,13 +45,13 @@ public class Main {
 //
 //        int tn = scanner.nextInt();
 //
-//        StaffDAO staffDAO = new StaffDAO();
+//        pkg.staff.StaffDAO staffDAO = new pkg.staff.StaffDAO();
 //        //staffDAODAO.testConnection();
-//        Staff user = staffDAO.findById(tn);
+//        pkg.staff.Staff user = staffDAO.findById(tn);
 //        System.out.println(user.print());
 //        System.out.println(user.getClass());
-//        if (user instanceof Employee){
-//            EmployeeInterface((Employee) user);
+//        if (user instanceof pkg.staff.Employee){
+//            EmployeeInterface((pkg.staff.Employee) user);
 //        }
 //
 //        System.out.println(staffDAO.getSubordinatesById(2));

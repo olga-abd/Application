@@ -1,3 +1,9 @@
+import pkg.course.Course;
+import pkg.course.CourseDAO;
+import pkg.course.CourseStatus;
+import pkg.staff.EmployeeCourse;
+import pkg.staff.EmployeeCourseDAO;
+
 import java.sql.Date;
 import java.util.List;
 import java.util.Set;
