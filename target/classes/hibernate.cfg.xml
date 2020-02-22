@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+        <property name="connection.driver-class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/applicationdb?serverTimezone=UTC</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">Zz789987!</property>
+        <property name="show_sql">false</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="connection.pool_size">5</property>
+        <property name="hbm2ddl.auto">update</property>
+        <mapping class="Employee"/>
+        <mapping class="DepHead"/>
+        <mapping class="HR"/>
+        <mapping class="Course"/>
+        <mapping class="EmployeeCourse"/>
+        <mapping class="Application"/>
+    </session-factory>
+</hibernate-configuration>
