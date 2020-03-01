@@ -24,7 +24,7 @@ public class DepheadForm extends JFrame{
     private JPanel dephead_panel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age;
+    private JLabel lbl_age1;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -40,13 +40,15 @@ public class DepheadForm extends JFrame{
 
     public DepheadForm(DepHead dh){
 
+        System.out.println(dh.print());
+
         staffDAO = new StaffDAO();
         employees = staffDAO.getSubordinatesById(dh.getTabNum());
         ApplicationDAO appDAO = new ApplicationDAO();
         List<Application> applications = appDAO.getApplicationsByUsers(employees);
 
         // заполняем шапку
-        lbl_age.setText(String.valueOf(dh.getAge()));
+        lbl_age1.setText(String.valueOf(dh.getAge()));
         lbl_fio.setText(dh.getFio());
         lbl_grade.setText(String.valueOf(dh.getGrade()));
         lbl_tn.setText(String.valueOf(dh.getTabNum()));

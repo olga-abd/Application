@@ -20,7 +20,7 @@ import java.util.Vector;
 public class EmployeeForm extends JFrame{
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age;
+    private JLabel lbl_age1;
     private JLabel lbl_grade;
     private JTable tbl_finishedCources;
     private JTable tbl_applications;
@@ -32,7 +32,8 @@ public class EmployeeForm extends JFrame{
     public EmployeeForm(Employee employee) {
 
         // заполняем шапку
-        lbl_age.setText(String.valueOf(employee.getAge()));
+        System.out.println(employee.print());
+        lbl_age1.setText(String.valueOf(employee.getAge()));
         lbl_fio.setText(employee.getFio());
         lbl_grade.setText(String.valueOf(employee.getGrade()));
         lbl_tn.setText(String.valueOf(employee.getTabNum()));

@@ -58,6 +58,7 @@ public class Main {
 
 //        new UpdateCourseStatus().start();
         new MainForm2();
+//        System.out.println("Hello");
 
     }
 

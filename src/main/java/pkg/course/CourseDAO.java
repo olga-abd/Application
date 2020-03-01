@@ -37,9 +37,9 @@ public class CourseDAO {
         return  userCourses;
     }
 
-    public Course fingById (int courseId){
+    public pkg.course.Course fingById (int courseId){
         Session session = HibernateUtils.getSesstionFactory().openSession();
-        Course course = session.get(Course.class, courseId);
+        pkg.course.Course course = session.get(Course.class, courseId);
         session.close();
         return course;
     }

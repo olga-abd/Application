@@ -16,7 +16,7 @@ import java.util.Vector;
 
 
 public class MainForm2 extends JFrame{
-    private JPanel mainPanel;
+    private JPanel mainPanel1;
     private JComboBox cb_tn;
     private JTextField tf_login;
     private JPasswordField pf_psw;
@@ -29,7 +29,7 @@ public class MainForm2 extends JFrame{
 //        pkg.staff.StaffDAO staffDAO = new pkg.staff.StaffDAO();
         //fillCheckBox(staffDAO.getAllStaff());
 
-        setContentPane(mainPanel);
+        setContentPane(mainPanel1);
         setVisible(true);
         pack();
         setLocationRelativeTo(null);
