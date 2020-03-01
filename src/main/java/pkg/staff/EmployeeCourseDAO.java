@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pkg.utils.HibernateUtils;
 
+import java.util.List;
+
 public class EmployeeCourseDAO {
 
     public void update (EmployeeCourse employeeCourse) {
@@ -20,5 +22,12 @@ public class EmployeeCourseDAO {
         session.save(employeeCourse);
         transaction.commit();
         session.close();
+    }
+
+    public List<EmployeeCourse> getEmployeeCourses() {
+        Session session = HibernateUtils.getSesstionFactory().openSession();
+        List<EmployeeCourse> ec = session.createQuery("from pkg.staff.EmployeeCourse").list();
+        session.close();
+        return ec;
     }
 }

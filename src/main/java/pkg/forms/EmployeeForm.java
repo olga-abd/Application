@@ -5,6 +5,8 @@ import pkg.application.ApplicationDAO;
 import pkg.course.Course;
 import pkg.course.CourseDAO;
 import pkg.staff.Employee;
+import pkg.staff.EmployeeCourse;
+import pkg.staff.EmployeeCourseDAO;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -13,9 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 public class EmployeeForm extends JFrame{
     private JLabel lbl_tn;
@@ -28,9 +28,10 @@ public class EmployeeForm extends JFrame{
     private JPanel panelEmployee;
     private JButton btn_createApp;
     private int checkCourseId;
+    private Employee empl;
 
     public EmployeeForm(Employee employee) {
-
+        empl = employee;
         // заполняем шапку
         System.out.println(employee.print());
         lbl_age1.setText(String.valueOf(employee.getAge()));
@@ -44,6 +45,9 @@ public class EmployeeForm extends JFrame{
 
         ApplicationDAO applicationDAO = new ApplicationDAO();
         fillApplications(applicationDAO.getApplicationsByUser(employee.getTabNum()));
+
+        EmployeeCourseDAO ecDAO = new EmployeeCourseDAO();
+        fillFinishedCoursed(ecDAO.getEmployeeCourses());
 
         btn_createApp.addActionListener(new ActionListener() {
             @Override
@@ -163,4 +167,36 @@ public class EmployeeForm extends JFrame{
 
 
     }
+
+    private void fillFinishedCoursed(List<EmployeeCourse> employeeCourses){
+        Vector<String> tableHeaders = new Vector<>();
+        Vector tableData = new Vector();
+        tableHeaders.add("Номер");
+        tableHeaders.add("Название");
+        tableHeaders.add("Учебный центр");
+        tableHeaders.add("Дата начала");
+        tableHeaders.add("Дата окончания");
+        tableHeaders.add("Продолжительность");
+        tableHeaders.add("Статус");
+
+        Collections.sort(employeeCourses);
+
+        for (EmployeeCourse employeeCourse : employeeCourses){
+            if (employeeCourse.getEmployee().equals(empl)){
+                Vector row = new Vector();
+                Course course = employeeCourse.getCourse();
+                row.add(course.getCourseId());
+                row.add(course.getName());
+                row.add(course.getTraningCenter());
+                row.add(course.getDateStart());
+                row.add(course.getDateEnd());
+                row.add(course.getDuration());
+                row.add(employeeCourse.getStatus().getDescription());
+                tableData.add(row);
+            }
+        }
+
+        tbl_finishedCources.setModel(new DefaultTableModel(tableData,tableHeaders));
+    }
+
 }

@@ -7,7 +7,7 @@ import pkg.course.CourseStatus;
 import javax.persistence.*;
 
 @Entity
-public class EmployeeCourse {
+public class EmployeeCourse implements Comparable{
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,4 +36,14 @@ public class EmployeeCourse {
 
     public CourseStatus getStatus(){return status;}
     public void setStatus(CourseStatus status){this.status = status;}
+
+    @Override
+    public int compareTo(Object o) {
+        int compareNames = status.compareTo(((EmployeeCourse) o).status);
+
+        return compareNames != 0
+                ? compareNames
+                : course.getDateStart().toLocalDate().compareTo(((EmployeeCourse) o).getCourse().getDateStart().toLocalDate());
+
+    }
 }

@@ -2,6 +2,7 @@ package pkg.staff;
 
 import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 @Entity
 public abstract class Staff {
@@ -67,4 +68,14 @@ public abstract class Staff {
 //        System.out.println(sb.toString().toUpperCase());
         return sb.toString().toUpperCase();
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Staff staff = (Staff) o;
+        return tabNum == staff.tabNum;
+    }
+
 }
