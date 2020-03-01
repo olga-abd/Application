@@ -58,6 +58,8 @@ public class MainUtils {
 
         CourseDAO courseDAO = new CourseDAO();
         courseDAO.save(course);
+
+        //course.addObserver();
     }
 
 }

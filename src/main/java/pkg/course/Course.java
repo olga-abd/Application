@@ -5,10 +5,11 @@ import pkg.staff.EmployeeCourse;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Observable;
 import java.util.Set;
 
 @Entity
-public class Course {
+public class Course extends Observable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int courseId;
@@ -31,9 +32,17 @@ public class Course {
 
     /////////
     public int getCourseId(){return courseId;}
+    public void setCourseId(int courseId){
+        this.courseId = courseId;
+    }
 
     public String getName(){return name;}
-    public void setName(String name){this.name = name;}
+    public void setName(String name){
+        this.name = name;
+
+        System.out.println("new course");
+        setChanged();
+    }
 
     public Date getDateStart(){return dateStart;}
     public void setDateStart(Date dateStart) {this.dateStart = dateStart;}

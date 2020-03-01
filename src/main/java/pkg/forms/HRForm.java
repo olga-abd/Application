@@ -16,11 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
-public class HRForm extends JFrame{
+public class HRForm extends JFrame implements Observer {
     private JPanel hrPanel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
@@ -103,10 +101,13 @@ public class HRForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 new NewCourseForm();
-                fillCourses(courseDAO.getAllCourses());
-                tbl_courses.revalidate();
+                //fillCourses(courseDAO.getAllCourses());
+                //tbl_courses.revalidate();
             }
         });
+
+
+
 
 
         setContentPane(hrPanel);
@@ -205,4 +206,12 @@ public class HRForm extends JFrame{
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("New course added " + arg);
+        System.out.println(((Course) o).getName());
+        CourseDAO courseDAO = new CourseDAO();
+        fillCourses(courseDAO.getAllCourses());
+        tbl_courses.revalidate();
+    }
 }
