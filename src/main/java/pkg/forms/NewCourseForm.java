@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 public class NewCourseForm extends JDialog{
     private JTextField tf_name;
     private JTextField tf_center;
-    private JTextField tf_startDate;
+    private JTextField tf_startDate1;
     private JTextField tf_endDate;
     private JTextField tf_duration;
     private JTextField tf_price;
@@ -24,7 +24,7 @@ public class NewCourseForm extends JDialog{
 
     public NewCourseForm () {
 
-        tf_startDate.setInputVerifier(new DateInputVerifier());
+        tf_startDate1.setInputVerifier(new DateInputVerifier());
         tf_endDate.setInputVerifier(new DateInputVerifier());
         tf_maxCount.setInputVerifier(new IntInputVerifier());
         tf_price.setInputVerifier(new FloatInputVerifier());
@@ -48,8 +48,8 @@ public class NewCourseForm extends JDialog{
             try {
                 Date dt = dateFormat.parse(txt);
                 lbl_error.setText(null);
-                if(tf_startDate.getText().trim().length() > 0 && tf_endDate.getText().trim().length() > 0) {
-                    if (dateFormat.parse(tf_startDate.getText()).compareTo(dateFormat.parse(tf_endDate.getText())) > 0) {
+                if(tf_startDate1.getText().trim().length() > 0 && tf_endDate.getText().trim().length() > 0) {
+                    if (dateFormat.parse(tf_startDate1.getText()).compareTo(dateFormat.parse(tf_endDate.getText())) > 0) {
                         lbl_error.setText("Дата окончания должна быть позже даты начала");
                         return false;
                     }
@@ -104,12 +104,12 @@ public class NewCourseForm extends JDialog{
                 tf_maxCount.getText().trim().length() > 0 && tf_maxCount.isValid() &&
                 tf_name.getText().trim().length() > 0 &&
                 tf_price.getText().trim().length() > 0 && tf_price.isValid() &&
-                tf_startDate.getText().trim().length() > 0 && tf_startDate.isValid()
+                tf_startDate1.getText().trim().length() > 0 && tf_startDate1.isValid()
             ) {
                 try {
                     MainUtils.createNewCourse(tf_name.getText(),
                             tf_center.getText(),
-                            new java.sql.Date(dateFormat.parse(tf_startDate.getText()).getTime()),
+                            new java.sql.Date(dateFormat.parse(tf_startDate1.getText()).getTime()),
                             new java.sql.Date (dateFormat.parse(tf_endDate.getText()).getTime()),
                             tf_duration.getText(),
                             new Float(tf_price.getText()),
