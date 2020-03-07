@@ -1,5 +1,6 @@
 package pkg.forms;
 
+import pkg.course.Course;
 import pkg.utils.MainUtils;
 
 import javax.swing.*;
@@ -21,9 +22,10 @@ public class NewCourseForm extends JDialog{
     private JPanel newCoursePanel;
     private JLabel lbl_error;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    private Course course;
 
     public NewCourseForm () {
-
+//        this.course = course;
         tf_startDate1.setInputVerifier(new DateInputVerifier());
         tf_endDate.setInputVerifier(new DateInputVerifier());
         tf_maxCount.setInputVerifier(new IntInputVerifier());
@@ -113,7 +115,8 @@ public class NewCourseForm extends JDialog{
                             new java.sql.Date (dateFormat.parse(tf_endDate.getText()).getTime()),
                             tf_duration.getText(),
                             new Float(tf_price.getText()),
-                            new Integer(tf_maxCount.getText()));
+                            new Integer(tf_maxCount.getText())
+                            );
                 } catch (ParseException ae) {
                     ae.printStackTrace();
                 }

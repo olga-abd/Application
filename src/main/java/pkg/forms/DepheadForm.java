@@ -113,6 +113,16 @@ public class DepheadForm extends JFrame{
         setVisible(true);
         setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateForm();
+            }
+        });
+        thread.start();
+
+
     }
 
     private void fillApplications (List<Application> applications){
@@ -165,6 +175,24 @@ public class DepheadForm extends JFrame{
 
         tbl_applications.setModel(new DefaultTableModel(tabData, tabHeader));
         tbl_approved.setModel(new DefaultTableModel(tabDataApr, tabHeader));
+
+    }
+
+
+    private void updateForm() {
+        ApplicationDAO appDAO = new ApplicationDAO();
+
+        while (true) {
+            try {
+                Thread.sleep(1000 * 60); // 1000 = 1 сек
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            fillApplications(appDAO.getApplicationsByUsers(employees));
+            tbl_applications.revalidate();
+        }
+
+
 
     }
 

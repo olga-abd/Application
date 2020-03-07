@@ -89,6 +89,14 @@ public class EmployeeForm extends JFrame{
         setVisible(true);
         setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateForm(employee.getTabNum());
+            }
+        });
+        thread.start();
     }
 
     private void fillOfferCourses(List<Course> courses){
@@ -134,7 +142,6 @@ public class EmployeeForm extends JFrame{
 
 
     }
-
 
     private void fillApplications(List<Application> applications){
         Vector<String> tableHeaders = new Vector<>();
@@ -197,6 +204,24 @@ public class EmployeeForm extends JFrame{
         }
 
         tbl_finishedCources.setModel(new DefaultTableModel(tableData,tableHeaders));
+    }
+
+
+    private void updateForm (int tn) {
+        CourseDAO courseDAO = new CourseDAO();
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+        EmployeeCourseDAO ecDAO = new EmployeeCourseDAO();
+
+        while(true){
+            try {
+                Thread.sleep(1000 * 60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            fillOfferCourses(courseDAO.getUserCourses(tn));
+            fillApplications(applicationDAO.getApplicationsByUser(tn));
+            //fillFinishedCoursed(ecDAO.getEmployeeCourses());
+        }
     }
 
 }

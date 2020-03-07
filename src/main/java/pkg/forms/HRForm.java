@@ -113,9 +113,17 @@ public class HRForm extends JFrame{
         setVisible(true);
         setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateForm();
+            }
+        });
+        thread.start();
     }
 
-    public void fillApplications (List<Application> applications){
+    private void fillApplications (List<Application> applications){
         Vector<String> tabHeader = new Vector<>();
         tabHeader.add("Таб номер");
         tabHeader.add("ФИО");
@@ -162,7 +170,7 @@ public class HRForm extends JFrame{
         tbl_applications.setModel(new DefaultTableModel(tabData,tabHeader));
     }
 
-    public void fillCourses (List<Course> courses) {
+    private void fillCourses (List<Course> courses) {
         Vector<String> tableHeaders = new Vector<>();
         Vector tableData = new Vector();
         tableHeaders.add("Номер");
@@ -203,6 +211,24 @@ public class HRForm extends JFrame{
         //System.out.println("курсы: " + tableData);
         tbl_courses.setModel(new DefaultTableModel(tableData,tableHeaders));
 
+    }
+
+    private void updateForm() {
+        CourseDAO courseDAO = new CourseDAO();
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+
+        while(true) {
+            try {
+                Thread.sleep(1000 * 60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            fillCourses(courseDAO.getAllCourses());
+            tbl_courses.revalidate();
+
+            fillApplications(applicationDAO.getAllApplications());
+            tbl_applications.revalidate();
+        }
     }
 
 }
