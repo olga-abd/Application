@@ -17,7 +17,7 @@ public class DepHead extends Staff {
 
     /////
     public String print() {
-        return getTabNum() + "\t" + getFio() + "\t" + "возраст: " + getAge() + "\t" + "грейд: " + getGrade() ;
+        return getTabNum() + "\t" + getFio() + "\t" + "возраст: " + getAge() + "\t" + "грейд: " + getGrade().getGradeId() ;
     }
 
     /////

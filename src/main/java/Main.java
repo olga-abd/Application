@@ -1,18 +1,27 @@
 import pkg.forms.MainForm2;
+import pkg.staff.DepHead;
 import pkg.staff.Employee;
+import pkg.staff.GradeSum;
+import pkg.staff.StaffDAO;
 
 public class Main {
     public static void main (String[] args) {
 //        pkg.staff.Employee employee = new pkg.staff.Employee();
-//        employee.setAge(54);
-//        employee.setFio("работник Иванов");
-//        employee.setGrade(5);
-//        employee.setLogin("ivanov");
+//        employee.setAge(55);
+//        employee.setFio("третий работник");
+//        GradeSum gradeSum = new GradeSum();
+//        gradeSum.setGradeId(5);
+//        gradeSum.setMaxSum(35000);
+//
+//        employee.setGrade(gradeSum);
+//        employee.setLogin("ivanov3");
 //        try {
 //            employee.setPassword("12345");
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+//        StaffDAO staffDAO = new StaffDAO();
+//        DepHead head = (DepHead) staffDAO.findById(2);
 //        pkg.staff.DepHead head = new pkg.staff.DepHead();
 //        head.setAge(46);
 //        head.setFio("начальник Петров");
@@ -38,7 +47,7 @@ public class Main {
 //
 //        pkg.staff.StaffDAO staffDAODAO = new pkg.staff.StaffDAO();
 //        staffDAODAO.save(hr);
-//        staffDAODAO.save(employee);
+//        staffDAO.save(employee);
 
 //        System.out.print("Для авторизации введите табельный номер: ");
 //        Scanner scanner = new Scanner(System.in);

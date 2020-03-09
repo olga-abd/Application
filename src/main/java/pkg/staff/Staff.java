@@ -12,7 +12,10 @@ public abstract class Staff {
 
     private String fio;
     private int age;
-    private int grade;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "grade")
+    private GradeSum grade;
     private String login;
     private String password;
 
@@ -23,8 +26,8 @@ public abstract class Staff {
     public void setFio (String fio) {this.fio = fio;}
     public int getAge() {return age;}
     public void setAge(int age) {this.age = age;}
-    public int getGrade() {return grade;}
-    public void  setGrade(int grade) {this.grade = grade;}
+    public GradeSum getGrade() {return grade;}
+    public void  setGrade(GradeSum grade) {this.grade = grade;}
     public void setLogin (String login){this.login = login;}
     public String getLogin (){return login;}
     public void setPassword (String password) throws Exception {

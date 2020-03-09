@@ -15,5 +15,6 @@
         <mapping class="pkg.course.Course"/>
         <mapping class="pkg.staff.EmployeeCourse"/>
         <mapping class="pkg.application.Application"/>
+        <mapping class="pkg.staff.GradeSum"/>
     </session-factory>
 </hibernate-configuration>

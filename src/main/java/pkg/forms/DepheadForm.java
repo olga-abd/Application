@@ -4,10 +4,9 @@ import pkg.application.Application;
 import pkg.application.ApplicationDAO;
 import pkg.application.ApplicationStatus;
 import pkg.course.Course;
+import pkg.course.CourseStatus;
 import pkg.exception.AppExceptions;
-import pkg.staff.DepHead;
-import pkg.staff.Employee;
-import pkg.staff.StaffDAO;
+import pkg.staff.*;
 import pkg.utils.MainUtils;
 
 import javax.swing.*;
@@ -34,6 +33,8 @@ public class DepheadForm extends JFrame{
     private JLabel lbl_errApp;
     private List<Employee> employees;
     private StaffDAO staffDAO;
+    private ApplicationDAO appDAO;
+    private EmployeeCourseDAO ecDAO;
     public int checkAppId;
 
 
@@ -44,13 +45,15 @@ public class DepheadForm extends JFrame{
 
         staffDAO = new StaffDAO();
         employees = staffDAO.getSubordinatesById(dh.getTabNum());
-        ApplicationDAO appDAO = new ApplicationDAO();
+        appDAO = new ApplicationDAO();
         List<Application> applications = appDAO.getApplicationsByUsers(employees);
+        ecDAO = new EmployeeCourseDAO();
+
 
         // заполняем шапку
         lbl_age1.setText(String.valueOf(dh.getAge()));
         lbl_fio.setText(dh.getFio());
-        lbl_grade.setText(String.valueOf(dh.getGrade()));
+        lbl_grade.setText(String.valueOf(dh.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(dh.getTabNum()));
 
 
@@ -75,7 +78,7 @@ public class DepheadForm extends JFrame{
         });
 
         fillApplications(applications);
-
+        fillEmp(ecDAO.getEmployeeCourses());
 
         btn_ok.addActionListener(new ActionListener() {
             @Override
@@ -178,9 +181,38 @@ public class DepheadForm extends JFrame{
 
     }
 
+    private void fillEmp(List<EmployeeCourse> employeeCourses) {
+        Vector<String> tableHead = new Vector<>();
+        tableHead.add("Таб номер");
+        tableHead.add("ФИО");
+        tableHead.add("Курс");
+        tableHead.add("Начало");
+        tableHead.add("Конец");
+        tableHead.add("Продолжительность");
+
+        Vector tableData = new Vector();
+
+        for (EmployeeCourse ec : employeeCourses) {
+            if (employees.contains(ec.getEmployee()) &&
+                ec.getStatus() == CourseStatus.INPROGRESS) {
+                Vector row = new Vector();
+                row.add(ec.getEmployee().getTabNum());
+                row.add(ec.getEmployee().getFio());
+                row.add(ec.getCourse().getName());
+                row.add(ec.getCourse().getDateStart());
+                row.add(ec.getCourse().getDateEnd());
+                row.add(ec.getCourse().getDuration());
+                tableData.add(row);
+            }
+        }
+
+        tbl_emp.setModel(new DefaultTableModel(tableData,tableHead));
+
+    }
+
 
     private void updateForm() {
-        ApplicationDAO appDAO = new ApplicationDAO();
+//        ApplicationDAO appDAO = new ApplicationDAO();
 
         while (true) {
             try {
@@ -189,7 +221,9 @@ public class DepheadForm extends JFrame{
                 e.printStackTrace();
             }
             fillApplications(appDAO.getApplicationsByUsers(employees));
+            fillEmp(ecDAO.getEmployeeCourses());
             tbl_applications.revalidate();
+            tbl_emp.revalidate();
         }
 
 

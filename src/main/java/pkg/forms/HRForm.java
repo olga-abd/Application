@@ -40,7 +40,7 @@ public class HRForm extends JFrame{
         // заполняем шапку
         lbl_age1.setText(String.valueOf(hr.getAge()));
         lbl_fio.setText(hr.getFio());
-        lbl_grade.setText(String.valueOf(hr.getGrade()));
+        lbl_grade.setText(String.valueOf(hr.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(hr.getTabNum()));
 
         ApplicationDAO appDAO = new ApplicationDAO();

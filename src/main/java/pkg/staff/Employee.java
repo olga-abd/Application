@@ -1,6 +1,7 @@
 package pkg.staff;
 
 import pkg.application.Application;
+import pkg.course.Course;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,9 +20,21 @@ public class Employee extends Staff {
     @OneToMany (mappedBy = "employee", fetch = FetchType.EAGER)
     private Set<Application> applications;
 
+
+    public float getApplicationSum(int year){
+        float res = 0;
+        for (EmployeeCourse ec : employeeCourses){
+            Course course = ec.getCourse();
+            if (course.getDateEnd().toLocalDate().getYear() == year) {
+                res += course.getPrice();
+            }
+        }
+        return res;
+    }
+
     /////
     public String print() {
-        return getTabNum() + "\t" + getFio() + "\t" + "возраст: " + getAge() + "\t" + "грейд: " + getGrade() ;
+        return getTabNum() + "\t" + getFio() + "\t" + "возраст: " + getAge() + "\t" + "грейд: " + getGrade().getGradeId() ;
     }
 
     /////

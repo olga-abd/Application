@@ -36,7 +36,7 @@ public class EmployeeForm extends JFrame{
         System.out.println(employee.print());
         lbl_age1.setText(String.valueOf(employee.getAge()));
         lbl_fio.setText(employee.getFio());
-        lbl_grade.setText(String.valueOf(employee.getGrade()));
+        lbl_grade.setText(String.valueOf(employee.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(employee.getTabNum()));
 
         // заполняем таблицу с курсами

@@ -20,7 +20,7 @@ public class HR extends Staff {
 
     /////
     public String print() {
-        return getTabNum() + "\t" + getFio() + "\t" + "возраст: " + getAge() + "\t" + "грейд: " + getGrade() ;
+        return getTabNum() + "\t" + getFio() + "\t" + "возраст: " + getAge() + "\t" + "грейд: " + getGrade().getGradeId() ;
     }
 
     /////
@@ -58,5 +58,9 @@ public class HR extends Staff {
     private boolean checkCourseDate (Course course){
         Date currentDate = new Date(System.currentTimeMillis());
         return course.getDateStart().toLocalDate().compareTo(currentDate.toLocalDate()) > 0;
+    }
+
+    private boolean checkStudentSum(Employee employee, Course course){
+        return false;
     }
 }
