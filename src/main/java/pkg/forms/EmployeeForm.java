@@ -20,7 +20,7 @@ import java.util.*;
 public class EmployeeForm extends JFrame{
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age1;
+    private JLabel lbl_age2;
     private JLabel lbl_grade;
     private JTable tbl_finishedCources;
     private JTable tbl_applications;
@@ -34,7 +34,7 @@ public class EmployeeForm extends JFrame{
         empl = employee;
         // заполняем шапку
         System.out.println(employee.print());
-        lbl_age1.setText(String.valueOf(employee.getAge()));
+        lbl_age2.setText(String.valueOf(employee.getAge()));
         lbl_fio.setText(employee.getFio());
         lbl_grade.setText(String.valueOf(employee.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(employee.getTabNum()));

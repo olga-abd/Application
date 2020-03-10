@@ -1,8 +1,10 @@
 package pkg.forms;
 
+import pkg.application.Application;
 import pkg.application.ApplicationStatus;
 import pkg.course.Course;
 import pkg.staff.Employee;
+import pkg.utils.MainUtils;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -10,7 +12,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class CourseWarning extends JDialog {
-    private JPanel contentPane;
+    private JPanel warningPanel;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JLabel txt_warning;
@@ -21,28 +23,26 @@ public class CourseWarning extends JDialog {
     private JLabel lbl_start;
     private JLabel lbl_end;
     private JLabel lbl_price;
-    private Course course;
-    private Employee employee;
+    private Application application;
+//    private Course course;
+//    private Employee employee;
 
-    public CourseWarning(Course course, Employee employee, ApplicationStatus status) {
+    public CourseWarning(Application application) {
 
-        this.course = course;
-        this.employee = employee;
+        this.application = application;
+        Course course = application.getCourse();
+        Employee employee = application.getEmployee();
 
-        setContentPane(contentPane);
+        setContentPane(warningPanel);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        if (status == ApplicationStatus.NOVACANT) {
-            txt_warning.setText("Записано максимальное количество участников");
-        } else if (status == ApplicationStatus.BADDATE) {
-            //todo: исправить статус
-            txt_warning.setText("Сумма по сотруднику исчерпана");
-        }
+        txt_warning.setText(application.getStatus().getDescription());
+
 
         lbl_emp.setText(employee.getTabNum() + ", " + employee.getFio());
         Date curDate = new Date(System.currentTimeMillis());
-
+        lbl_maxSum.setText(String.valueOf(employee.getGrade().getMaxSum()));
         lbl_sum.setText(String.valueOf(employee.getApplicationSum(curDate.toLocalDate().getYear())));
 
 
@@ -52,8 +52,10 @@ public class CourseWarning extends JDialog {
         lbl_end.setText(sdp.format(course.getDateEnd()));
         lbl_price.setText(String.valueOf(course.getPrice()));
 
+
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("ddd");
                 onOK();
             }
         });
@@ -73,15 +75,22 @@ public class CourseWarning extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        warningPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+
+        pack();
+        setVisible(true);
+
     }
 
     private void onOK() {
         // add your code here
+        System.out.println(application);
+        MainUtils.setExternalStatus(application);
         dispose();
     }
 

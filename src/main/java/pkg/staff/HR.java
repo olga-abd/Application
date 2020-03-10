@@ -29,30 +29,44 @@ public class HR extends Staff {
 
 
     public void approveApp (Application application, boolean decision) throws AppExceptions {
-        if (checkStudentCount(application.getCourse()) && checkCourseDate(application.getCourse())) {
-            application.setHr(this);
-            application.setStatus(decision ? ApplicationStatus.CLOSED : ApplicationStatus.REJECT);
+
+        Course course = application.getCourse();
+        Employee employee = application.getEmployee();
+        ApplicationDAO applicationDAO = new ApplicationDAO();
+        application.setHr(this);
+
+        if (!decision) {
+            application.setStatus(ApplicationStatus.REJECT);
+            applicationDAO.update(application);
+        } else if (!checkCourseDate(course)) {
+            application.setStatus(ApplicationStatus.BADDATE);
+            applicationDAO.update(application);
+            throw new AppExceptions(AppExceptionEnum.MAXCOUNT.name());
+        } else if (!checkStudentCount(course)) {
+            application.setStatus(ApplicationStatus.NOVACANT);
+            applicationDAO.update(application);
+            throw new AppExceptions(AppExceptionEnum.MAXCOUNT.name());
+        } else if (!checkStudentSum(employee, course)) {
+            application.setStatus(ApplicationStatus.EXCEEDSUM);
+            applicationDAO.update(application);
+            throw new AppExceptions(AppExceptionEnum.MAXCOUNT.name());
+        } else {
+            application.setStatus(ApplicationStatus.CLOSED);
 
             EmployeeCourse employeeCourse = new EmployeeCourse();
             employeeCourse.setCourse(application.getCourse());
             employeeCourse.setEmployee(application.getEmployee());
             employeeCourse.setStatus(CourseStatus.REGISTERED);
 
-            ApplicationDAO applicationDAO = new ApplicationDAO();
             applicationDAO.update(application);
             EmployeeCourseDAO ecDAO = new EmployeeCourseDAO();
             ecDAO.save(employeeCourse);
-        } else {
-            application.setHr(this);
-            application.setStatus(checkStudentCount(application.getCourse()) ? ApplicationStatus.BADDATE : ApplicationStatus.NOVACANT);
-            ApplicationDAO applicationDAO = new ApplicationDAO();
-            applicationDAO.update(application);
-            throw new AppExceptions(AppExceptionEnum.MAXCOUNT.name());
         }
+
     }
 
     private boolean checkStudentCount (Course course){
-        return course.getMaxCount() >= course.getEmployeeCourses().size();
+        return course.getMaxCount() >= course.getEmployeeCourses().size() + 1;
     }
 
     private boolean checkCourseDate (Course course){
@@ -61,6 +75,11 @@ public class HR extends Staff {
     }
 
     private boolean checkStudentSum(Employee employee, Course course){
-        return false;
+        float sum = employee.getApplicationSum((new Date(System.currentTimeMillis())).toLocalDate().getYear());
+        if (sum + course.getPrice() > employee.getGrade().getMaxSum()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

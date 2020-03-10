@@ -24,7 +24,7 @@ public class HRForm extends JFrame{
     private JPanel hrPanel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age1;
+    private JLabel lbl_age2;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -38,7 +38,7 @@ public class HRForm extends JFrame{
         System.out.println(hr.print());
 
         // заполняем шапку
-        lbl_age1.setText(String.valueOf(hr.getAge()));
+        lbl_age2.setText(String.valueOf(hr.getAge()));
         lbl_fio.setText(hr.getFio());
         lbl_grade.setText(String.valueOf(hr.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(hr.getTabNum()));
@@ -80,7 +80,9 @@ public class HRForm extends JFrame{
                     fillApplications(appDAO.getAllApplications());
                     tbl_applications.revalidate();
                 } catch (AppExceptions ae) {
-                    lbl_error.setText(ae.getMessage());
+//                    lbl_error.setText(ae.getMessage());
+                    Application application = appDAO.getApplicationById(checkAppId);
+                    new CourseWarning(application);
                 }
             }
         });

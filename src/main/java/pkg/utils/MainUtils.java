@@ -46,6 +46,13 @@ public class MainUtils {
         hr.approveApp(application, decision);
     }
 
+    public static void setExternalStatus (Application application) {
+        ApplicationDAO appDAO = new ApplicationDAO();
+        application.setStatus(ApplicationStatus.EXTERNAL);
+        appDAO.update(application);
+        System.out.println("updated");
+    }
+
     public static void createNewCourse (String name, String center, Date starDate, Date endDate, String duration, float price, int maxCount) {
         Course course = new Course();
         course.setName(name);

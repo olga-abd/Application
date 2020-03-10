@@ -23,7 +23,7 @@ public class DepheadForm extends JFrame{
     private JPanel dephead_panel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age1;
+    private JLabel lbl_age2;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -51,7 +51,7 @@ public class DepheadForm extends JFrame{
 
 
         // заполняем шапку
-        lbl_age1.setText(String.valueOf(dh.getAge()));
+        lbl_age2.setText(String.valueOf(dh.getAge()));
         lbl_fio.setText(dh.getFio());
         lbl_grade.setText(String.valueOf(dh.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(dh.getTabNum()));

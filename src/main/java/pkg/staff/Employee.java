@@ -4,6 +4,7 @@ import pkg.application.Application;
 import pkg.course.Course;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ public class Employee extends Staff {
     @JoinColumn (name = "head_tabNum")
     private DepHead head;
 
-    @OneToMany (mappedBy = "employee")
+    @OneToMany (mappedBy = "employee", fetch = FetchType.EAGER)
     private Set<EmployeeCourse> employeeCourses;
 
     @OneToMany (mappedBy = "employee", fetch = FetchType.EAGER)
@@ -23,6 +24,8 @@ public class Employee extends Staff {
 
     public float getApplicationSum(int year){
         float res = 0;
+        EmployeeCourseDAO ecDAO = new EmployeeCourseDAO();
+
         for (EmployeeCourse ec : employeeCourses){
             Course course = ec.getCourse();
             if (course.getDateEnd().toLocalDate().getYear() == year) {
