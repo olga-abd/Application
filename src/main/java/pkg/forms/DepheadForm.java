@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
@@ -23,7 +24,7 @@ public class DepheadForm extends JFrame{
     private JPanel dephead_panel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age2;
+    private JLabel lbl_age1;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -51,7 +52,7 @@ public class DepheadForm extends JFrame{
 
 
         // заполняем шапку
-        lbl_age2.setText(String.valueOf(dh.getAge()));
+        lbl_age1.setText(String.valueOf(dh.getAge()));
         lbl_fio.setText(dh.getFio());
         lbl_grade.setText(String.valueOf(dh.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(dh.getTabNum()));
@@ -140,6 +141,9 @@ public class DepheadForm extends JFrame{
         tabHeader.add("Статус заявки");
         tabHeader.add("Дата заявки");
 
+        Vector<String> tabH = tabHeader;
+        tabH.add("Комментарий");
+
         Vector tabData = new Vector();
         Vector tabDataApr = new Vector();
 
@@ -152,7 +156,7 @@ public class DepheadForm extends JFrame{
         });
 
 
-
+        SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Application app : applications){
             Vector row = new Vector();
@@ -162,7 +166,7 @@ public class DepheadForm extends JFrame{
             row.add(app.getAppId());
             Course course = app.getCourse();
             row.add(course.getName());
-            row.add(course.getDateStart());
+            row.add(sdp.format(course.getDateStart()));
             row.add(course.getDuration());
             row.add(course.getTraningCenter());
             row.add(app.getStatus().getDescription());
@@ -171,6 +175,7 @@ public class DepheadForm extends JFrame{
                 tabData.add(row);
             }
             else if (app.getStatus() != ApplicationStatus.GENERATED && app.getStatus() != ApplicationStatus.CLOSED) {
+                row.add(app.getComment());
                 tabDataApr.add(row);
             }
         }

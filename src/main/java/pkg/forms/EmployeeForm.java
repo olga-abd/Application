@@ -15,12 +15,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class EmployeeForm extends JFrame{
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age2;
+    private JLabel lbl_age1;
     private JLabel lbl_grade;
     private JTable tbl_finishedCources;
     private JTable tbl_applications;
@@ -34,7 +35,7 @@ public class EmployeeForm extends JFrame{
         empl = employee;
         // заполняем шапку
         System.out.println(employee.print());
-        lbl_age2.setText(String.valueOf(employee.getAge()));
+        lbl_age1.setText(String.valueOf(employee.getAge()));
         lbl_fio.setText(employee.getFio());
         lbl_grade.setText(String.valueOf(employee.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(employee.getTabNum()));
@@ -150,6 +151,7 @@ public class EmployeeForm extends JFrame{
         tableHeaders.add("Дата курса");
         tableHeaders.add("Продолжительность");
         tableHeaders.add("Статус заявки");
+        tableHeaders.add("Комментарий");
 
         applications.sort(new Comparator<Application>() {
             @Override
@@ -158,14 +160,17 @@ public class EmployeeForm extends JFrame{
             }
         });
 
+        SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
+
         Vector tableData = new Vector();
         for (Application application : applications){
             Vector row = new Vector();
             row.add(application.getAppId());
             row.add(application.getCourse().getName());
-            row.add(application.getCourse().getDateStart());
+            row.add(sdp.format(application.getCourse().getDateStart()));
             row.add(application.getCourse().getDuration());
             row.add(application.getStatus().getDescription());
+            row.add(application.getComment());
             tableData.add(row);
         }
 

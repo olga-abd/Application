@@ -46,6 +46,23 @@ public class Application {
     private EmployeeCourse employeeCourse;
 
 
+    private String comment;
+
+    public void setDateAdd(LocalDateTime dateAdd) {
+        this.dateAdd = dateAdd;
+    }
+
+    public void setDateChange(LocalDateTime dateChange) {
+        this.dateChange = dateChange;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     //////
 

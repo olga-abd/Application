@@ -1,7 +1,6 @@
 package pkg.forms;
 
 import pkg.application.Application;
-import pkg.application.ApplicationStatus;
 import pkg.course.Course;
 import pkg.staff.Employee;
 import pkg.utils.MainUtils;
@@ -12,7 +11,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class CourseWarning extends JDialog {
-    private JPanel warningPanel;
+    private JPanel warningPanel1;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JLabel txt_warning;
@@ -33,7 +32,7 @@ public class CourseWarning extends JDialog {
         Course course = application.getCourse();
         Employee employee = application.getEmployee();
 
-        setContentPane(warningPanel);
+        setContentPane(warningPanel1);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
@@ -75,7 +74,7 @@ public class CourseWarning extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        warningPanel.registerKeyboardAction(new ActionListener() {
+        warningPanel1.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

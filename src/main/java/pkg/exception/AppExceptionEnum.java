@@ -4,7 +4,7 @@ public enum AppExceptionEnum {
     NOSTAFF ("Пользователь не найден"),
     NOCOURSE ("Курс не найден"),
     NOAPP ("Заявка не найдена"),
-    INCPSW ("Введен неверный пароль"),
+    INCPSW ("Неверный логин или пароль"),
     MAXCOUNT("Запись на курс невозможна");
 
     private String description;

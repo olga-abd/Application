@@ -16,11 +16,11 @@ import java.util.Vector;
 
 
 public class MainForm2 extends JFrame{
-    private JPanel mainPanel2;
+    private JPanel mainPanel;
     private JComboBox cb_tn;
     private JTextField tf_login;
     private JPasswordField pf_psw;
-    private JButton btn_ok2;
+    private JButton btn_ok;
     private JLabel lbl_error;
 
     public MainForm2(){
@@ -29,12 +29,12 @@ public class MainForm2 extends JFrame{
 //        pkg.staff.StaffDAO staffDAO = new pkg.staff.StaffDAO();
         //fillCheckBox(staffDAO.getAllStaff());
 
-        setContentPane(mainPanel2);
+        setContentPane(mainPanel);
         setVisible(true);
         pack();
         setLocationRelativeTo(null);
 
-        btn_ok2.addActionListener(new ActionListener() {
+        btn_ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                int tn = (int) cb_tn.getSelectedItem();

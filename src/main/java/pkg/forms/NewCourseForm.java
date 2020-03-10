@@ -1,6 +1,5 @@
 package pkg.forms;
 
-import pkg.course.Course;
 import pkg.utils.MainUtils;
 
 import javax.swing.*;
@@ -19,7 +18,7 @@ public class NewCourseForm extends JDialog{
     private JTextField tf_price;
     private JTextField tf_maxCount;
     private JButton btn_save;
-    private JPanel newCoursePanel;
+    private JPanel newCoursePanel1;
     private JLabel lbl_error;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //    private Course course;
@@ -34,7 +33,7 @@ public class NewCourseForm extends JDialog{
         btn_save.addActionListener(new SaveButtonListener());
 
         setModal(true);
-        setContentPane(newCoursePanel);
+        setContentPane(newCoursePanel1);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

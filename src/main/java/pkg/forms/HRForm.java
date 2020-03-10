@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
@@ -24,7 +25,7 @@ public class HRForm extends JFrame{
     private JPanel hrPanel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age2;
+    private JLabel lbl_age1;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -38,7 +39,7 @@ public class HRForm extends JFrame{
         System.out.println(hr.print());
 
         // заполняем шапку
-        lbl_age2.setText(String.valueOf(hr.getAge()));
+        lbl_age1.setText(String.valueOf(hr.getAge()));
         lbl_fio.setText(hr.getFio());
         lbl_grade.setText(String.valueOf(hr.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(hr.getTabNum()));
@@ -90,14 +91,19 @@ public class HRForm extends JFrame{
         btn_cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    lbl_error.setText(null);
-                    MainUtils.hrApproveApp(hr, checkAppId, false);
-                    fillApplications(appDAO.getAllApplications());
-                    tbl_applications.revalidate();
-                } catch (AppExceptions ae) {
-                    lbl_error.setText(ae.getMessage());
-                }
+//                try {
+//                    lbl_error.setText(null);
+//                    MainUtils.hrApproveApp(hr, checkAppId, false);
+//                    fillApplications(appDAO.getAllApplications());
+//                    tbl_applications.revalidate();
+//                } catch (AppExceptions ae) {
+//                    lbl_error.setText(ae.getMessage());
+//                }
+
+                new CourseRejectReason(hr, checkAppId);
+                fillApplications(appDAO.getAllApplications());
+                tbl_applications.revalidate();
+
             }
         });
 
@@ -149,6 +155,8 @@ public class HRForm extends JFrame{
             }
         });
 
+        SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
+
         for (Application application : applications){
             if (application.getStatus() == ApplicationStatus.AGREED){
                 Vector row = new Vector();
@@ -158,11 +166,11 @@ public class HRForm extends JFrame{
                 Course course = application.getCourse();
                 row.add(course.getCourseId());
                 row.add(course.getName());
-                row.add(course.getDateStart());
+                row.add(sdp.format(course.getDateStart()));
                 row.add(course.getDuration());
                 row.add(course.getTraningCenter());
                 row.add(application.getStatus().getDescription());
-                row.add(application.getDateChange());
+                row.add(sdp.format(application.getDateChange()));
                 row.add(course.getMaxCount());
                 row.add(course.getEmployeeCourses().size());
                 tabData.add(row);
@@ -194,6 +202,7 @@ public class HRForm extends JFrame{
             }
         });
 
+        SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Course course : courses){
             if (course.getDateStart().toLocalDate().compareTo(currentDate.toLocalDate()) > 0) {
@@ -201,8 +210,8 @@ public class HRForm extends JFrame{
                 oneRow.add(course.getCourseId());
                 oneRow.add(course.getName());
                 oneRow.add(course.getTraningCenter());
-                oneRow.add(course.getDateStart());
-                oneRow.add(course.getDateEnd());
+                oneRow.add(sdp.format(course.getDateStart()));
+                oneRow.add(sdp.format(course.getDateEnd()));
                 oneRow.add(course.getDuration());
                 oneRow.add(course.getMaxCount());
                 oneRow.add(course.getEmployeeCourses().size());

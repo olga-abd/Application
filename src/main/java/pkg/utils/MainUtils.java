@@ -15,8 +15,9 @@ public class MainUtils {
     public static Staff getStaff (String login, String password) throws AppExceptions {
         StaffDAO staffDAO = new StaffDAO();
         Staff staff = staffDAO.findByLogin(login);
-        if (staff == null) throw new AppExceptions(AppExceptionEnum.NOSTAFF.name());
-        if (staff.checkPassword(password)) return staff;
+        if (staff != null && staff.checkPassword(password)) return staff;
+        //if (staff == null) throw new AppExceptions(AppExceptionEnum.NOSTAFF.name());
+
         throw new AppExceptions(AppExceptionEnum.INCPSW.name());
     }
 
@@ -40,10 +41,14 @@ public class MainUtils {
     }
 
     public static void hrApproveApp (HR hr, int appId, boolean decision) throws AppExceptions {
+        hrApproveApp(hr, appId, decision, null);
+    }
+
+    public static void hrApproveApp (HR hr, int appId, boolean decision, String reason) throws AppExceptions {
         ApplicationDAO appDAO = new ApplicationDAO();
         Application application = appDAO.getApplicationById(appId);
         if(application == null) throw  new AppExceptions(AppExceptionEnum.NOAPP.name());
-        hr.approveApp(application, decision);
+        hr.approveApp(application, decision, reason);
     }
 
     public static void setExternalStatus (Application application) {

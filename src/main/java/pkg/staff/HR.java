@@ -28,12 +28,13 @@ public class HR extends Staff {
     public void setApplications(Set<Application> applications){this.applications = applications;}
 
 
-    public void approveApp (Application application, boolean decision) throws AppExceptions {
+    public void approveApp(Application application, boolean decision, String reason) throws AppExceptions {
 
         Course course = application.getCourse();
         Employee employee = application.getEmployee();
         ApplicationDAO applicationDAO = new ApplicationDAO();
         application.setHr(this);
+        if (reason != null) application.setComment(reason);
 
         if (!decision) {
             application.setStatus(ApplicationStatus.REJECT);

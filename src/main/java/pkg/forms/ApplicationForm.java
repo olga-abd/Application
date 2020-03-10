@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class ApplicationForm extends JDialog {
     private JPanel app_panel;
-    private JLabel lbl_courseId2;
+    private JLabel lbl_courseId;
     private JTextArea lbl_courseName;
     private JLabel lbl_center;
     private JLabel lbl_date;
@@ -21,7 +21,7 @@ public class ApplicationForm extends JDialog {
     public ApplicationForm(Employee employee, Course course){
         setModal(true);
 
-        lbl_courseId2.setText(String.valueOf(course.getCourseId()));
+        lbl_courseId.setText(String.valueOf(course.getCourseId()));
         lbl_courseName.setText(course.getName());
         //lbl_courseName.setWr
         lbl_center.setText(course.getTraningCenter());
