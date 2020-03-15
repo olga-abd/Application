@@ -10,6 +10,7 @@ import pkg.staff.HR;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Application {
@@ -34,6 +35,22 @@ public class Application {
     private HR hr;
 
     private ApplicationStatus status;
+
+    @Override
+    public String toString() {
+        return "Application{" +
+                "appId=" + appId +
+                ", course=" + course +
+                ", employee=" + employee +
+                ", head=" + head +
+                ", hr=" + hr +
+                ", status=" + status +
+                ", dateAdd=" + dateAdd +
+                ", dateChange=" + dateChange +
+                ", employeeCourse=" + employeeCourse +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 
     @CreationTimestamp
     private LocalDateTime dateAdd;
@@ -64,7 +81,19 @@ public class Application {
         this.comment = comment;
     }
 
-    //////
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Application that = (Application) o;
+        return appId == that.appId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(appId);
+    }
+//////
 
     public int getAppId (){return appId;}
     public LocalDateTime getDateAdd(){return dateAdd;}

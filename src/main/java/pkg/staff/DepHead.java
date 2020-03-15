@@ -29,10 +29,11 @@ public class DepHead extends Staff {
 
 
     // Согласовать заявку
-    public void approveApp (Application application, boolean decision) {
+    public void approveApp(Application application, boolean decision, String reason) {
         System.out.println("class: " + this);
         //System.out.println(dh.print());
         application.setHead(this);
+        if (reason != null) application.setComment(reason);
         application.setStatus(decision ? ApplicationStatus.AGREED : ApplicationStatus.DISAGREED);
     }
 

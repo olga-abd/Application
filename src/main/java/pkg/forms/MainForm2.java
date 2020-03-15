@@ -9,66 +9,56 @@ import pkg.utils.HibernateUtils;
 import pkg.utils.MainUtils;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Vector;
 
 
 public class MainForm2 extends JFrame{
-    private JPanel mainPanel;
+    private JPanel mainPanel2;
     private JComboBox cb_tn;
     private JTextField tf_login;
     private JPasswordField pf_psw;
-    private JButton btn_ok;
+    private JButton btn_ok1;
     private JLabel lbl_error;
 
     public MainForm2(){
 
         HibernateUtils.getSesstionFactory();
-//        pkg.staff.StaffDAO staffDAO = new pkg.staff.StaffDAO();
+//        pkg.dao.StaffDAO staffDAO = new pkg.dao.StaffDAO();
         //fillCheckBox(staffDAO.getAllStaff());
 
-        setContentPane(mainPanel);
+        setContentPane(mainPanel2);
         setVisible(true);
         pack();
         setLocationRelativeTo(null);
 
-        btn_ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                int tn = (int) cb_tn.getSelectedItem();
-//                pkg.staff.Staff staff = staffDAO.findById(tn);
-//                System.out.println(staff.print());
-//
-//                setVisible(false);
-//                if (staff instanceof pkg.staff.Employee) {
-//                    new EmployeeForm((pkg.staff.Employee)staff);
-//                }
-//                dispose();
-
-                try {
-                    Staff staff = MainUtils.getStaff(tf_login.getText(), String.valueOf(pf_psw.getPassword()));
-                    lbl_error.setText(null);
-
-                    if (staff instanceof Employee){
-                        new EmployeeForm((Employee) staff);
-                    } else if (staff instanceof DepHead){
-                        new DepheadForm((DepHead) staff);
-                    } else if (staff instanceof HR){
-                        new HRForm((HR) staff);
-                    }
-                    dispose();
-
-                } catch (AppExceptions ae) {
-                    lbl_error.setText(ae.getMessage());
-                }
-
-            }
-        });
+        btn_ok1.addActionListener(e -> onOk());
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        mainPanel2.registerKeyboardAction(e -> onOk(),
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+    }
+
+    private void onOk() {
+        try {
+            Staff staff = MainUtils.getStaff(tf_login.getText(), String.valueOf(pf_psw.getPassword()));
+            lbl_error.setText(null);
+
+            if (staff instanceof Employee){
+                new EmployeeForm((Employee) staff);
+            } else if (staff instanceof DepHead){
+                new DepheadForm((DepHead) staff);
+            } else if (staff instanceof HR){
+                new HRForm((HR) staff);
+            }
+            dispose();
+
+        } catch (AppExceptions ae) {
+            lbl_error.setText(ae.getMessage());
+        }
     }
 
 

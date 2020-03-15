@@ -1,10 +1,11 @@
 package pkg.utils;
 
 import pkg.application.Application;
-import pkg.application.ApplicationDAO;
+import pkg.dao.ApplicationDAO;
 import pkg.application.ApplicationStatus;
 import pkg.course.Course;
-import pkg.course.CourseDAO;
+import pkg.dao.CourseDAO;
+import pkg.dao.StaffDAO;
 import pkg.exception.AppExceptionEnum;
 import pkg.exception.AppExceptions;
 import pkg.staff.*;
@@ -31,11 +32,15 @@ public class MainUtils {
     }
 
     public static void headApproveApp (DepHead dh, int appId, boolean decision) throws AppExceptions {
+        headApproveApp(dh, appId, decision, null);
+    }
+
+    public static void headApproveApp (DepHead dh, int appId, boolean decision, String reason) throws AppExceptions {
 //        System.out.println ("utils: " + dh);
         ApplicationDAO appDAO = new ApplicationDAO();
         Application application = appDAO.getApplicationById(appId);
         if(application == null) throw new AppExceptions(AppExceptionEnum.NOAPP.name());
-        dh.approveApp(application, decision);
+        dh.approveApp(application, decision, reason);
         appDAO.update(application);
         System.out.println("Заявка " + appId + " обработана руководителем " + dh.getFio() + " с решением: " + (decision ? "согласовано" : "отказано"));
     }

@@ -1,10 +1,11 @@
 package pkg.staff;
 
 import pkg.application.Application;
-import pkg.application.ApplicationDAO;
+import pkg.dao.ApplicationDAO;
 import pkg.application.ApplicationStatus;
 import pkg.course.Course;
 import pkg.course.CourseStatus;
+import pkg.dao.EmployeeCourseDAO;
 import pkg.exception.AppExceptionEnum;
 import pkg.exception.AppExceptions;
 

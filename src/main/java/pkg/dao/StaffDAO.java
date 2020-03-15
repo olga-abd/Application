@@ -1,7 +1,9 @@
-package pkg.staff;
+package pkg.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pkg.staff.Employee;
+import pkg.staff.Staff;
 import pkg.utils.HibernateUtils;
 
 import java.util.List;

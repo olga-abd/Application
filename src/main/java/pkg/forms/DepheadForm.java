@@ -1,10 +1,12 @@
 package pkg.forms;
 
 import pkg.application.Application;
-import pkg.application.ApplicationDAO;
+import pkg.dao.ApplicationDAO;
 import pkg.application.ApplicationStatus;
 import pkg.course.Course;
 import pkg.course.CourseStatus;
+import pkg.dao.EmployeeCourseDAO;
+import pkg.dao.StaffDAO;
 import pkg.exception.AppExceptions;
 import pkg.staff.*;
 import pkg.utils.MainUtils;
@@ -24,7 +26,7 @@ public class DepheadForm extends JFrame{
     private JPanel dephead_panel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age1;
+    private JLabel lbl_age2;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -32,6 +34,7 @@ public class DepheadForm extends JFrame{
     private JTable tbl_emp;
     private JTable tbl_approved;
     private JLabel lbl_errApp;
+    private JTable tbl_futureCourses;
     private List<Employee> employees;
     private StaffDAO staffDAO;
     private ApplicationDAO appDAO;
@@ -52,7 +55,7 @@ public class DepheadForm extends JFrame{
 
 
         // заполняем шапку
-        lbl_age1.setText(String.valueOf(dh.getAge()));
+        lbl_age2.setText(String.valueOf(dh.getAge()));
         lbl_fio.setText(dh.getFio());
         lbl_grade.setText(String.valueOf(dh.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(dh.getTabNum()));
@@ -101,14 +104,15 @@ public class DepheadForm extends JFrame{
         btn_cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    lbl_errApp.setText(null);
-                    MainUtils.headApproveApp(dh, checkAppId, false);
+//                try {
+//                    lbl_errApp.setText(null);
+                    //MainUtils.headApproveApp(dh, checkAppId, false);
+                    new CourseRejectReason(dh, checkAppId);
                     fillApplications(appDAO.getApplicationsByUsers(employees));
                     tbl_applications.revalidate();
-                } catch (AppExceptions ae) {
-                    lbl_errApp.setText(ae.getMessage());
-                }
+//                } catch (AppExceptions ae) {
+//                    lbl_errApp.setText(ae.getMessage());
+//                }
             }
         });
 
@@ -118,12 +122,7 @@ public class DepheadForm extends JFrame{
         setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                updateForm();
-            }
-        });
+        Thread thread = new Thread(() -> updateForm());
         thread.start();
 
 
@@ -157,7 +156,7 @@ public class DepheadForm extends JFrame{
 
 
         SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
-
+        System.out.println(applications);
         for (Application app : applications){
             Vector row = new Vector();
 
@@ -196,23 +195,34 @@ public class DepheadForm extends JFrame{
         tableHead.add("Продолжительность");
 
         Vector tableData = new Vector();
+        Vector tableDataFut = new Vector();
 
         for (EmployeeCourse ec : employeeCourses) {
-            if (employees.contains(ec.getEmployee()) &&
-                ec.getStatus() == CourseStatus.INPROGRESS) {
-                Vector row = new Vector();
-                row.add(ec.getEmployee().getTabNum());
-                row.add(ec.getEmployee().getFio());
-                row.add(ec.getCourse().getName());
-                row.add(ec.getCourse().getDateStart());
-                row.add(ec.getCourse().getDateEnd());
-                row.add(ec.getCourse().getDuration());
-                tableData.add(row);
+            if (employees.contains(ec.getEmployee())) {
+                if (ec.getStatus() == CourseStatus.INPROGRESS) {
+                    Vector row = new Vector();
+                    row.add(ec.getEmployee().getTabNum());
+                    row.add(ec.getEmployee().getFio());
+                    row.add(ec.getCourse().getName());
+                    row.add(ec.getCourse().getDateStart());
+                    row.add(ec.getCourse().getDateEnd());
+                    row.add(ec.getCourse().getDuration());
+                    tableData.add(row);
+                } else if (ec.getStatus() == CourseStatus.REGISTERED){
+                    Vector row = new Vector();
+                    row.add(ec.getEmployee().getTabNum());
+                    row.add(ec.getEmployee().getFio());
+                    row.add(ec.getCourse().getName());
+                    row.add(ec.getCourse().getDateStart());
+                    row.add(ec.getCourse().getDateEnd());
+                    row.add(ec.getCourse().getDuration());
+                    tableDataFut.add(row);
+                }
             }
         }
 
         tbl_emp.setModel(new DefaultTableModel(tableData,tableHead));
-
+        tbl_futureCourses.setModel(new DefaultTableModel(tableDataFut,tableHead));
     }
 
 
@@ -229,6 +239,8 @@ public class DepheadForm extends JFrame{
             fillEmp(ecDAO.getEmployeeCourses());
             tbl_applications.revalidate();
             tbl_emp.revalidate();
+            tbl_approved.revalidate();
+            tbl_futureCourses.revalidate();
         }
 
 

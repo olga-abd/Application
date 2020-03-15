@@ -2,9 +2,9 @@ package pkg.staff;
 
 import pkg.application.Application;
 import pkg.course.Course;
+import pkg.dao.EmployeeCourseDAO;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

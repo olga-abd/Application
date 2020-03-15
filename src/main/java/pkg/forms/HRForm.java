@@ -1,10 +1,10 @@
 package pkg.forms;
 
 import pkg.application.Application;
-import pkg.application.ApplicationDAO;
+import pkg.dao.ApplicationDAO;
 import pkg.application.ApplicationStatus;
 import pkg.course.Course;
-import pkg.course.CourseDAO;
+import pkg.dao.CourseDAO;
 import pkg.exception.AppExceptions;
 import pkg.staff.HR;
 import pkg.utils.MainUtils;
@@ -25,7 +25,7 @@ public class HRForm extends JFrame{
     private JPanel hrPanel;
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age1;
+    private JLabel lbl_age2;
     private JLabel lbl_grade;
     private JTable tbl_applications;
     private JButton btn_ok;
@@ -39,7 +39,7 @@ public class HRForm extends JFrame{
         System.out.println(hr.print());
 
         // заполняем шапку
-        lbl_age1.setText(String.valueOf(hr.getAge()));
+        lbl_age2.setText(String.valueOf(hr.getAge()));
         lbl_fio.setText(hr.getFio());
         lbl_grade.setText(String.valueOf(hr.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(hr.getTabNum()));
@@ -170,7 +170,7 @@ public class HRForm extends JFrame{
                 row.add(course.getDuration());
                 row.add(course.getTraningCenter());
                 row.add(application.getStatus().getDescription());
-                row.add(sdp.format(application.getDateChange()));
+                row.add((application.getDateChange()));
                 row.add(course.getMaxCount());
                 row.add(course.getEmployeeCourses().size());
                 tabData.add(row);

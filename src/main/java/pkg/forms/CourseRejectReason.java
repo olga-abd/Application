@@ -1,25 +1,26 @@
 package pkg.forms;
 
-import pkg.application.Application;
 import pkg.exception.AppExceptions;
+import pkg.staff.DepHead;
 import pkg.staff.HR;
+import pkg.staff.Staff;
 import pkg.utils.MainUtils;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 public class CourseRejectReason extends JDialog {
-    private JPanel contentPane;
+    private JPanel contentPane2;
     private JButton buttonOK;
     private JTextField txt_reason;
     private int appId;
-    private HR hr;
+    private Staff staff;
 
-    public CourseRejectReason(HR hr, int appId) {
+    public CourseRejectReason(Staff staff, int appId) {
         this.appId = appId;
-        this.hr = hr;
+        this.staff = staff;
 
-        setContentPane(contentPane);
+        setContentPane(contentPane2);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
@@ -40,7 +41,7 @@ public class CourseRejectReason extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        contentPane2.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
             }
@@ -54,7 +55,11 @@ public class CourseRejectReason extends JDialog {
     private void onOK() {
         // add your code here
         try {
-            MainUtils.hrApproveApp(hr, appId, false, txt_reason.getText());
+            if (staff instanceof HR) {
+                MainUtils.hrApproveApp((HR) staff, appId, false, txt_reason.getText());
+            } else if (staff instanceof DepHead) {
+                MainUtils.headApproveApp((DepHead) staff, appId, false, txt_reason.getText());
+            }
         } catch (AppExceptions appExceptions) {
             appExceptions.printStackTrace();
         }

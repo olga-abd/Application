@@ -13,7 +13,7 @@ public abstract class Staff {
     private String fio;
     private int age;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn (name = "grade")
     private GradeSum grade;
     private String login;

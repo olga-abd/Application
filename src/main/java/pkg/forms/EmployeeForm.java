@@ -1,12 +1,12 @@
 package pkg.forms;
 
 import pkg.application.Application;
-import pkg.application.ApplicationDAO;
+import pkg.dao.ApplicationDAO;
 import pkg.course.Course;
-import pkg.course.CourseDAO;
+import pkg.dao.CourseDAO;
 import pkg.staff.Employee;
 import pkg.staff.EmployeeCourse;
-import pkg.staff.EmployeeCourseDAO;
+import pkg.dao.EmployeeCourseDAO;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -21,13 +21,15 @@ import java.util.*;
 public class EmployeeForm extends JFrame{
     private JLabel lbl_tn;
     private JLabel lbl_fio;
-    private JLabel lbl_age1;
+    private JLabel lbl_age2;
     private JLabel lbl_grade;
     private JTable tbl_finishedCources;
     private JTable tbl_applications;
     private JTable tbl_offerCourses;
     private JPanel panelEmployee;
     private JButton btn_createApp;
+    private JLabel lbl_max;
+    private JLabel lbl_sum;
     private int checkCourseId;
     private Employee empl;
 
@@ -35,10 +37,12 @@ public class EmployeeForm extends JFrame{
         empl = employee;
         // заполняем шапку
         System.out.println(employee.print());
-        lbl_age1.setText(String.valueOf(employee.getAge()));
+        lbl_age2.setText(String.valueOf(employee.getAge()));
         lbl_fio.setText(employee.getFio());
         lbl_grade.setText(String.valueOf(employee.getGrade().getGradeId()));
         lbl_tn.setText(String.valueOf(employee.getTabNum()));
+        lbl_max.setText(String.valueOf(employee.getGrade().getMaxSum()));
+        lbl_sum.setText(String.valueOf(employee.getApplicationSum((new Date(System.currentTimeMillis())).toLocalDate().getYear())));
 
         // заполняем таблицу с курсами
         CourseDAO courseDAO = new CourseDAO();

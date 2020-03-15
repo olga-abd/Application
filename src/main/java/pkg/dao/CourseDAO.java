@@ -1,9 +1,10 @@
-package pkg.course;
+package pkg.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pkg.application.Application;
-import pkg.application.ApplicationDAO;
+import pkg.course.Course;
+import pkg.dao.ApplicationDAO;
 import pkg.utils.HibernateUtils;
 
 import java.util.ArrayList;
